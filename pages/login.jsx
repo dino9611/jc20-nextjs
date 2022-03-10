@@ -109,28 +109,28 @@ const Login = ({ loginAction }) => {
       </Head>
       <div className="flex rounded-lg bg-white shadow-jutsu overflow-hidden ">
         <div className="w-4/5 h-image-login  ">
-          {/* <Image
+          <Image
             src={"/tangan.jpg"}
             objectFit="cover"
             layout="responsive"
             // placeholder="blur"
             width="100"
             height="100"
-          /> */}
-          <Image
-            loader={() =>
-              "https://i.imgur.com/G6x1bGq_d.webp?maxwidth=760&fidelity=grand"
-            }
-            src="jam.png"
-            alt="jam aja"
-            // className="rounded-full"
-            // src={"/tangan.jpg"}
-            objectFit="cover"
-            layout="responsive"
-            // placeholder="blur"
-            width="100"
-            height="100"
           />
+          {/* <Image 
+          //   loader={() =>
+          //     "https://i.imgur.com/G6x1bGq_d.webp?maxwidth=760&fidelity=grand"
+          //   }
+          //   src="jam.png"
+          //   alt="jam aja"
+          //   // className="rounded-full"
+          //   // src={"/tangan.jpg"}
+          //   objectFit="cover"
+          //   layout="responsive"
+          //   // placeholder="blur"
+          //   width="100"
+          //   height="100"
+          // />
           {/* <img
             src={"/tangan.jpg"}
             width="100%"

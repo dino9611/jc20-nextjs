@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import Cookies from "js-cookie";
 import { API_URL } from "../../helpers";
 import { toast } from "react-toastify";
 
@@ -18,7 +18,8 @@ export const loginAction = ({ username, password }, router) => {
       }
       console.log(res.data);
       dispatch({ type: "LOGIN", payload: res.data[0] });
-      localStorage.setItem("id", res.data[0].id);
+      // localStorage.setItem("id", res.data[0].id);
+      Cookies.set("id", res.data[0].id);
       router.push("/");
       toast.success("berhasil Login", {
         position: "top-right",
