@@ -2,7 +2,32 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
-export default function Home() {
+import axios from "axios";
+
+export const getStaticProps = async () => {
+  try {
+    let res = await axios.get(`http://localhost:5000/products`);
+
+    return {
+      // data dimasukkan kedalam props
+      props: {
+        products: res.data,
+      },
+      // revalidate digunakan untuk server fetching uldang dan generate html baru
+      // tiap sepuluh detik setelah request pertama
+      revalidate: 10,
+    };
+  } catch (error) {
+    return {
+      props: {
+        products: [],
+        error_message: "server error bro",
+      },
+    };
+  }
+};
+
+export default function Home(props) {
   return (
     <div className={styles.container}>
       <Head>
@@ -12,6 +37,13 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
+        {props.products.map((val, index) => {
+          return (
+            <h5 key={index} className="text-lg">
+              {val.name}
+            </h5>
+          );
+        })}
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>

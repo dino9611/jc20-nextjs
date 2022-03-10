@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import {
@@ -18,6 +19,7 @@ import useLoading from "../hooks/useLoading";
 
 import { connect, useSelector } from "react-redux";
 import { loginAction } from "../redux/actions";
+import Image from "next/image";
 
 const CssFormControl = styled(FormControl)({
   "& label.Mui-focused": {
@@ -59,11 +61,21 @@ const CssTextField = styled(TextField)({
   },
 });
 
-export async function getServerSideProps(ctx) {
-  console.log(ctx);
-  const res = localStorage.getItem("id");
-  console.log(res);
-}
+// export async function getServerSideProps(ctx) {
+//   console.log(ctx);
+//   // if (true) {
+//   //   ctx.res.writeHead(302, { Location: "/" });
+//   //   ctx.res.end();
+//   //   return;
+//   // }
+//   // return { props: {} };
+//   return {
+//     redirect: {
+//       destination: "/",
+//       permanent: false,
+//     },
+//   };
+// }
 
 const Login = ({ loginAction }) => {
   const router = useRouter();
@@ -73,16 +85,16 @@ const Login = ({ loginAction }) => {
   });
 
   const { loading } = useLoading();
-  console.log(loading);
+  // console.log(loading);
   const { isLogin } = useSelector((state) => state.user);
   const handleInput = (e, prop) => {
     setinput({ ...input, [prop]: e.target.value });
   };
-  // useEffect(() => {
-  //   if (isLogin) {
-  //     router.push("/");
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (isLogin) {
+      router.push("/");
+    }
+  }, []);
 
   const loginHandle = (e) => {
     e.preventDefault();
@@ -97,12 +109,34 @@ const Login = ({ loginAction }) => {
       </Head>
       <div className="flex rounded-lg bg-white shadow-jutsu overflow-hidden ">
         <div className="w-4/5 h-image-login  ">
-          <img
+          {/* <Image
+            src={"/tangan.jpg"}
+            objectFit="cover"
+            layout="responsive"
+            // placeholder="blur"
+            width="100"
+            height="100"
+          /> */}
+          <Image
+            loader={() =>
+              "https://i.imgur.com/G6x1bGq_d.webp?maxwidth=760&fidelity=grand"
+            }
+            src="jam.png"
+            alt="jam aja"
+            // className="rounded-full"
+            // src={"/tangan.jpg"}
+            objectFit="cover"
+            layout="responsive"
+            // placeholder="blur"
+            width="100"
+            height="100"
+          />
+          {/* <img
             src={"/tangan.jpg"}
             width="100%"
             className="object-cover"
             style={{ height: "100%" }}
-          />
+          /> */}
         </div>
         <div className="w-3/5 px-8 py-8 flex flex-col justify-center">
           <div className="text-4xl text-center ">Login</div>
