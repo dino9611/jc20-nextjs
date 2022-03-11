@@ -3,8 +3,12 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
 import axios from "axios";
+import { event } from "../lib/gtag";
+import { useEffect, useState } from "react";
+
 export const getStaticProps = async () => {
   try {
+    console.log(process.env.NEXT_PUBLIC_GA_ID);
     let res = await axios.get(`http://localhost:5000/products`);
 
     return {
@@ -26,7 +30,46 @@ export const getStaticProps = async () => {
   }
 };
 
+const addToCart = (productName) => {
+  event({
+    action: "add_to_cart",
+    category: "ecommerce",
+    label: "add-cart",
+    value: productName,
+  });
+  alert("berhasil add to cart");
+};
+
 export default function Home(props) {
+  // let x = localStorage.getItem("waktu");
+  // if (!localStorage.getItem("waktu")) {
+  //   x = 10;
+  // }
+  let [time, settime] = useState(10);
+
+  useEffect(() => {
+    // let timeinit = 10;
+    if (time <= 0) {
+      clearInterval(timer);
+      return;
+    }
+    if (!localStorage.getItem("waktu") || localStorage.getItem("waktu") == 0) {
+      localStorage.setItem("waktu", 10);
+      settime(10);
+    } else {
+      let res = localStorage.getItem("waktu");
+      settime(res);
+    }
+    let timer = setInterval(() => {
+      console.log(time);
+      settime(time - 1);
+      localStorage.setItem("waktu", time - 1);
+    }, 1000);
+    return () => {
+      clearInterval(timer);
+    };
+  }, [time]);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -38,13 +81,17 @@ export default function Home(props) {
       <main className={styles.main}>
         {props.products.map((val, index) => {
           return (
-            <h5 key={index} className="text-lg">
+            <h5
+              onClick={() => addToCart(val.name)}
+              key={index}
+              className="text-lg"
+            >
               {val.name}
             </h5>
           );
         })}
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome to {time} <a href="https://nextjs.org">Next.js!</a>
         </h1>
         <Link href="/login">
           <a>login</a>
