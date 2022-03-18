@@ -49,26 +49,39 @@ export default function Home(props) {
 
   useEffect(() => {
     // let timeinit = 10;
-    if (time <= 0) {
-      clearInterval(timer);
-      return;
-    }
-    if (!localStorage.getItem("waktu") || localStorage.getItem("waktu") == 0) {
-      localStorage.setItem("waktu", 10);
-      settime(10);
+    // let
+    // if (time <= 0) {
+    //   clearInterval(timer);
+    //   return;
+    // }
+
+    let expiry = new Date();
+    let timer;
+    let nowaja = new Date().getTime();
+    expiry = expiry.setSeconds(expiry.getSeconds() + 10);
+    localStorage.setItem("waktu", expiry);
+    if (
+      !localStorage.getItem("waktu") ||
+      localStorage.getItem("waktu") <= nowaja
+    ) {
+      alert("nggak boleh");
     } else {
-      let res = localStorage.getItem("waktu");
-      settime(res);
+      timer = setInterval(() => {
+        //  let now = new Date().getTime();
+        let x = (expiry - new Date().getTime()) / 1000;
+        settime(x);
+        if (x < 1) {
+          clearInterval(timer);
+          localStorage.removeItem("waktu");
+        }
+      }, 1000);
     }
-    let timer = setInterval(() => {
-      console.log(time);
-      settime(time - 1);
-      localStorage.setItem("waktu", time - 1);
-    }, 1000);
+
     return () => {
       clearInterval(timer);
+      localStorage.removeItem("waktu");
     };
-  }, [time]);
+  }, []);
 
   return (
     <div className={styles.container}>

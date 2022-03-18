@@ -42,7 +42,7 @@ function MyApp({ Component, pageProps }) {
         }}
       />
       <Provider store={store}>
-        <div style={{ backgroundColor: "#E5E5E5" }}>
+        <div style={{ backgroundColor: "#E5E5E5", minHeight: "100vh" }}>
           <Header />
           <Component {...pageProps} />
         </div>
