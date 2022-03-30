@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import Script from "next/script";
 import { useRouter } from "next/router";
 import * as gtag from "../lib/gtag";
+import AuthProvider from "../components/authProvider";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -43,8 +44,10 @@ function MyApp({ Component, pageProps }) {
       />
       <Provider store={store}>
         <div style={{ backgroundColor: "#E5E5E5", minHeight: "100vh" }}>
-          <Header />
-          <Component {...pageProps} />
+          <AuthProvider>
+            <Header />
+            <Component {...pageProps} />
+          </AuthProvider>
         </div>
         <ToastContainer />
       </Provider>

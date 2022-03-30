@@ -30,7 +30,7 @@ const CssFormControl = styled(FormControl)({
   },
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
-      //   borderColor: "#D84727",
+      // borderColor: "#D84727",
     },
     "&:hover fieldset": {
       borderColor: "#D84727",
@@ -61,7 +61,7 @@ const CssTextField = styled(TextField)({
   },
 });
 
-// export async function getServerSideProps(ctx) {
+// export async function getStaticProps(ctx) {
 //   console.log(ctx);
 //   // if (true) {
 //   //   ctx.res.writeHead(302, { Location: "/" });
@@ -69,6 +69,7 @@ const CssTextField = styled(TextField)({
 //   //   return;
 //   // }
 //   // return { props: {} };
+//   console.log(ctx.req.cookies);
 //   return {
 //     redirect: {
 //       destination: "/",
@@ -92,7 +93,7 @@ const Login = ({ loginAction }) => {
   };
   useEffect(() => {
     if (isLogin) {
-      router.push("/");
+      router.replace("/");
     }
   }, []);
 
@@ -144,7 +145,7 @@ const Login = ({ loginAction }) => {
             <div className="mt-4">
               <CssTextField
                 // error
-                label="Username"
+                label="Username or Email"
                 type="text"
                 sx={{ width: "100%" }}
                 onChange={(e) => handleInput(e, "username")}

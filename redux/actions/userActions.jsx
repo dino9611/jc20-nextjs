@@ -7,19 +7,15 @@ export const loginAction = ({ username, password }, router) => {
   return async (dispatch) => {
     try {
       dispatch({ type: "LOADING" });
-      let res = await axios.get(`${API_URL}/users`, {
-        params: {
-          username: username,
-          password,
-        },
+      let res = await axios.post(`${API_URL}/auth/login`, {
+        username,
+        email: username,
+        password,
       });
-      if (!res.data.length) {
-        throw { message: "user tidak ditemukan" };
-      }
       console.log(res.data);
-      dispatch({ type: "LOGIN", payload: res.data[0] });
-      // localStorage.setItem("id", res.data[0].id);
-      Cookies.set("id", res.data[0].id);
+      dispatch({ type: "LOGIN", payload: res.data });
+      // set cookies for nextjs
+      Cookies.set("token", res.headers["x-access-token"]);
       router.push("/");
       toast.success("berhasil Login", {
         position: "top-right",
@@ -28,6 +24,13 @@ export const loginAction = ({ username, password }, router) => {
         draggable: true,
       });
     } catch (error) {
+      console.log(error.response);
+      toast.error(error.response.data.message || "error server", {
+        position: "top-right",
+        autoClose: 3000,
+        closeOnClick: true,
+        draggable: true,
+      });
       dispatch({ type: "ERROR", payload: error.message || "network error" });
     } finally {
       dispatch({ type: "DONE" });

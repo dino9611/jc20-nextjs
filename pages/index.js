@@ -31,6 +31,7 @@ export default function Home(props) {
     name: "",
     price: "",
   });
+
   const [inputEdit, setinputEdit] = useState({
     name: "",
     price: "",

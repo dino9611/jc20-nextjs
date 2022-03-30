@@ -3,9 +3,9 @@ import { AiOutlineUser } from "react-icons/ai";
 import { IconButton } from "@mui/material";
 // import Brand from "./../../assets/brand.svg";
 import Link from "next/link";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 export const Header = () => {
-  //   const { username, isLogin, roleId } = useSelector((state) => state.user);
+  const { username, isLogin, roleId } = useSelector((state) => state.user);
   return (
     <div className="container  md:px-32 px-10 py-4 flex ">
       <div className="py-3">
@@ -24,28 +24,28 @@ export const Header = () => {
           <BsSearch />
         </IconButton>
 
-        {/* {isLogin ? (
+        {isLogin ? (
           <div className="cursor-pointer flex p-2">
             <AiOutlineUser className="text-2xl mr-2" />
             {username}
           </div>
-        ) : ( */}
-        <Link href="/login">
-          <div className="flex p-2">
-            <AiOutlineUser className="text-2xl mr-2" />
-            Log In
-          </div>
-        </Link>
-        {/* )} */}
-        {/* {roleId === 1 ? ( */}
-        {/* <Link href="/admin/manage/product">
+        ) : (
+          <Link href="/login">
+            <div className="flex p-2">
+              <AiOutlineUser className="text-2xl mr-2" />
+              Log In
+            </div>
+          </Link>
+        )}
+        {roleId === 1 ? (
+          <Link href="/admin/manage/product">
             <div className="p-2 min-w-max">Manage product</div>
-          </Link> */}
-        {/* ) : ( */}
-        <div className="cursor-pointer rounded-full p-2 bg-matoa-primary">
-          <BsBag className="text-2xl" />
-        </div>
-        {/* )} */}
+          </Link>
+        ) : (
+          <div className="cursor-pointer rounded-full p-2 bg-matoa-primary">
+            <BsBag className="text-2xl" />
+          </div>
+        )}
       </div>
     </div>
   );
